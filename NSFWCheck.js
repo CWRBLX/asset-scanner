@@ -8,8 +8,7 @@ const Redis = new redis();
 
 
 export default class NsfwCheck {
-    constructor(redis) {
-    }
+    constructor() {}
 
     async fetchProxies() {
         let proxies = fs.readFileSync('proxies.txt', 'utf-8').split('\n');
