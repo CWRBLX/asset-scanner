@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.14.0",
+    "axios": "^1.6.2",
+    "node-tesseract-ocr": "^2.2.1",
+    "nsfwjs": "^2.4.2"
+  }
+}
