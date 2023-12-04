@@ -6,9 +6,10 @@ import fs from 'fs';
 import redis from 'ioredis';
 const Redis = new redis();
 
-
 export default class NsfwCheck {
-    constructor() {}
+    constructor() {
+        if (!fs.existsSync('proxies.txt')) throw new Error('No proxies.txt file found - read the README.md file for more information');
+    }
 
     async fetchProxies() {
         let proxies = fs.readFileSync('proxies.txt', 'utf-8').split('\n');
@@ -97,7 +98,7 @@ export default class NsfwCheck {
         return obj;
     }
 
-    async getId(id) {
+    async getId(id, isRetry) {
         const proxy = await this.getProxy();
         try {
             const robloxRes = await axios.get(`https://thumbnails.roblox.com/v1/assets?assetIds=${id}&returnPolicy=PlaceHolder&size=420x420&format=png`,{ proxy })
