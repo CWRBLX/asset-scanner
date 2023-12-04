@@ -10,16 +10,16 @@ const Nsfw = new NsfwCheck(redis);
 app.get('/check/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    if (!id) return res.status(400).json({ error: 'No ID provided' });
+    if (!id) return res.status(400).json({ error: 'No id provided' });
 
-    if (isNaN(id)) return res.status(400).json({ error: 'Invalid ID' });
+    if (isNaN(id)) return res.status(400).json({ error: 'Invalid id' });
 
     const cached = await Redis.get(`nsfw:${id}`);
     if (cached) return res.json(JSON.parse(cached));
 
-    const data = await Nsfw.getId(id);
+    const data = await Nsfw.getId(id, false);
     if (!data) {
-        await Redis.set(`nsfw:${id}`, JSON.stringify({ error: 'Invalid ID' }), 'EX', 60 * 30);
+        await Redis.set(`nsfw:${id}`, JSON.stringify({ error: 'Invalid id' }), 'EX', 60 * 30);
         return res.status(400).json({ error: 'Invalid id' });
     }
 
@@ -31,7 +31,7 @@ app.get('/check/:id', async (req, res) => {
     
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
