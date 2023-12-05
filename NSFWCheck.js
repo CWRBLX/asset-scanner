@@ -35,7 +35,7 @@ export default class NsfwCheck {
     }
 
     async isNsfw(predictions) {
-    let score;
+        let score;
         let isHigh = false;
         const scores = {    }
         for (const prediction of predictions) {
